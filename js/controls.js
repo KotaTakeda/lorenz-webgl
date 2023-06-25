@@ -4,6 +4,7 @@ function Controls(lorenz) {
 
     this.chain = [];
     this.button = null;
+    this.sum = 0;
 
     var sigma = this.bind('#sigma', '#sigma-label', function(value) {
         return lorenz.params.sigma = value;
@@ -14,6 +15,9 @@ function Controls(lorenz) {
     var rho = this.bind('#rho', '#rho-label', function(value) {
         return lorenz.params.sigma = value;
     })(lorenz.params.rho);
+    var sum = this.bind('#sum', '#sum-label', function(value) {
+        return this.sum = value;
+    })(lorenz.params.sigma + lorenz.params.beta + lorenz.params.rho);
 
     this.set_sigma = function(value) {
         lorenz.params.sigma = value;
@@ -27,6 +31,13 @@ function Controls(lorenz) {
         lorenz.params.rho = value;
         rho(value);
     };
+    this.set_sum = function() {
+        var value = lorenz.params.sigma + lorenz.params.beta + lorenz.params.rho;
+        this.sum = value;
+        sum(value);
+    };
+    // FIXME: 各パラメータの変更に応じて変更するようにすべき？
+    setInterval(this.set_sum, 100);
 
     this.set_length = this.bind('#length', '#length-label', function(value) {
         var length = Math.pow(2, parseFloat(value));

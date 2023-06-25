@@ -2,6 +2,7 @@ var lorenz = null;
 var controls = null;
 
 window.addEventListener('load', function() {
+    console.log("lorenz");
     var canvas = document.querySelector('#lorenz');
     lorenz = Lorenz.run(canvas);
     controls = new Controls(lorenz);
