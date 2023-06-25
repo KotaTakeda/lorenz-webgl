@@ -1,4 +1,5 @@
 # Lorenz System WebGL
+[demo](https://kotatakeda.github.io/lorenz-webgl/)
 
 ## Original text on README
 > This is an interactive animation of a chaotic [Lorenz system](https://en.wikipedia.org/wiki/Lorenz_system). Click and drag to look around the system in 3D. Middle-click and drag to reposition.
