@@ -5,6 +5,7 @@ function Controls(lorenz) {
     this.chain = [];
     this.button = null;
     this.sum = 0;
+    this.K = 0;
 
     var sigma = this.bind('#sigma', '#sigma-label', function(value) {
         return lorenz.params.sigma = value;
@@ -13,12 +14,17 @@ function Controls(lorenz) {
         return lorenz.params.beta = value;
     })(lorenz.params.beta);
     var rho = this.bind('#rho', '#rho-label', function(value) {
-        return lorenz.params.sigma = value;
+        return lorenz.params.rho = value;
     })(lorenz.params.rho);
-    var sum = this.bind('#sum', '#sum-label', function(value) {
+    var bind_sum = this.bind('#sum', '#sum-label', function(value) {
         return this.sum = value;
     })(lorenz.params.sigma + lorenz.params.beta + lorenz.params.rho);
-
+    var bind_K = this.bind('#k', '#k-label', (value) => {
+        return this.K = value;
+    });
+    var bind_lipexp= this.bind('#lipexp', '#lipexp-label', (value) => {
+        return this.lipexp = value;
+    });
     this.set_sigma = function(value) {
         lorenz.params.sigma = value;
         sigma(value);
@@ -31,13 +37,34 @@ function Controls(lorenz) {
         lorenz.params.rho = value;
         rho(value);
     };
-    this.set_sum = function() {
-        var value = lorenz.params.sigma + lorenz.params.beta + lorenz.params.rho;
-        this.sum = value;
-        sum(value);
-    };
+
+    this.set_profile = () => {
+        bind_sum(compute_sum(lorenz.params.sigma, lorenz.params.beta, lorenz.params.rho));
+        bind_K(compute_K(lorenz.params.sigma, lorenz.params.beta, lorenz.params.rho));
+        bind_lipexp(compute_lipexp(lorenz.params.sigma, lorenz.params.beta, lorenz.params.rho));
+    }
+    
+    // this.set_sum = function() {
+    //     var value = compute_sum(lorenz.params.sigma, lorenz.params.beta, lorenz.params.rho);
+    //     bind_sum(value);
+    // };
+    // this.set_K = () => {
+    //     if (lorenz.params.beta < 1) {
+    //         bind_K(0);
+    //         return;
+    //     }
+    //     var value = compute_K(lorenz.params.sigma, lorenz.params.beta, lorenz.params.rho);
+    //     bind_K(value);
+    // }
+    // this.set_lipexp = () => {
+    //     var value = compute_lipexp(lorenz.params.sigma, lorenz.params.beta, lorenz.params.rho);
+    //     bind_lipexp(value);
+    // }
     // FIXME: 各パラメータの変更に応じて変更するようにすべき？
-    setInterval(this.set_sum, 100);
+    setInterval(this.set_profile, 100);
+    // setInterval(this.set_sum, 100);
+    // setInterval(this.set_K, 100);
+    // setInterval(this.set_lipexp, 100);
 
     this.set_length = this.bind('#length', '#length-label', function(value) {
         var length = Math.pow(2, parseFloat(value));
@@ -201,7 +228,7 @@ Controls.prototype.pause = function() {
     this.lorenz.params.paused = !this.lorenz.params.paused;
 };
 
-Controls.prototype.bind = function(input_selector, label_selector, f) {
+Controls.prototype.bind = (input_selector, label_selector, f) => {
     var input = document.querySelector(input_selector);
     var label = document.querySelector(label_selector);
     var handler = function(e) {
@@ -209,7 +236,7 @@ Controls.prototype.bind = function(input_selector, label_selector, f) {
     };
     input.addEventListener('input', handler);
     input.addEventListener('change', handler);
-    return function self(value) {
+    return self = (value) => {
         if (typeof value === 'number') {
             input.value = value;
             label.textContent = value;
@@ -220,3 +247,16 @@ Controls.prototype.bind = function(input_selector, label_selector, f) {
         return self;
     };
 };
+
+// utility functions
+function compute_sum(sigma, beta, rho) {
+    return sigma + beta + rho;
+}
+function compute_K(sigma, beta, rho) {
+    return 0.5*beta*(rho+sigma)/Math.sqrt(beta-1);
+}
+
+function compute_lipexp(sigma, beta, rho) {
+    var K = compute_K(sigma, beta, rho);
+    return 2*(K-1);
+}
