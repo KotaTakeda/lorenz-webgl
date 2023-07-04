@@ -18,7 +18,7 @@ function Controls(lorenz) {
     })(lorenz.params.rho);
     var bind_sum = this.bind('#sum', '#sum-label', function(value) {
         return this.sum = value;
-    })(lorenz.params.sigma + lorenz.params.beta + lorenz.params.rho);
+    });
     var bind_K = this.bind('#k', '#k-label', (value) => {
         return this.K = value;
     });
