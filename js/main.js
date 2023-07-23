@@ -12,10 +12,10 @@ window.addEventListener('load', function() {
             h.style.display = h.style.display == 'none' ? 'block' : 'none';
         }
     });
-    window.addEventListener('touchstart', function self(e) {
-        var h = document.querySelector('#help');
-        h.style.display = 'none';
-    });
+    // window.addEventListener('touchstart', function self(e) {
+    //     var h = document.querySelector('#help');
+    //     h.style.display = 'none';
+    // });
 
     var stats = document.querySelector('#stats');
     function update_stats() {
