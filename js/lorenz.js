@@ -16,8 +16,8 @@ function Lorenz(canvas) {
         sigma: 10,
         beta: 8 / 3,
         rho: 28,
-        step_size: 0.002,
-        steps_per_frame: 3,
+        step_size: 0.0005,
+        steps_per_frame: 12,
         paused: false
     };
     this.display = {
@@ -345,8 +345,8 @@ Lorenz.prototype.draw = function() {
     var width = gl.canvas.clientWidth;
     var height = gl.canvas.clientHeight;
     if (gl.canvas.width != width || gl.canvas.height != height) {
-        gl.canvas.width = width;
-        gl.canvas.height = height;
+        gl.canvas.width = width*4;
+        gl.canvas.height = height*4;
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     }
     gl.clear(gl.COLOR_BUFFER_BIT);
