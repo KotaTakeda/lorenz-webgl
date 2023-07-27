@@ -5,6 +5,7 @@ function Controls(lorenz) {
     this.chain = [];
     this.button = null;
 
+    // params of Lorenz 63
     var sigma = this.bind('#sigma', '#sigma-label', function(value) {
         return lorenz.params.sigma = value;
     })(lorenz.params.sigma);
@@ -27,6 +28,24 @@ function Controls(lorenz) {
         lorenz.params.rho = value;
         rho(value);
     };
+    
+    // params for simulation
+    var stepsize = this.bind('#stepsize', '#stepsize-label', function(value) {
+        return lorenz.params.step_size = value;
+    })(lorenz.params.step_size);
+    var steprate = this.bind('#steprate', '#steprate-label', function(value) {
+        return lorenz.params.steps_per_frame = value;
+    })(lorenz.params.steps_per_frame);
+
+    this.set_stepsize = function(value) {
+        lorenz.params.step_size = value;
+        stepsize(value);
+    };
+    this.set_steprate = function(value) {
+        lorenz.params.steps_per_frame = value;
+        steprate(value);
+    };
+
 
     this.set_length = this.bind('#length', '#length-label', function(value) {
         var length = Math.pow(2, parseFloat(value));

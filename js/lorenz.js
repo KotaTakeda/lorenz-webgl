@@ -16,8 +16,8 @@ function Lorenz(canvas) {
         sigma: 10,
         beta: 8 / 3,
         rho: 28,
-        step_size: 0.0005,
-        steps_per_frame: 12,
+        step_size: 0.001,
+        steps_per_frame: 6,
         paused: false
     };
     this.display = {
