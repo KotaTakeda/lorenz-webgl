@@ -345,8 +345,8 @@ Lorenz.prototype.draw = function() {
     var width = gl.canvas.clientWidth;
     var height = gl.canvas.clientHeight;
     if (gl.canvas.width != width || gl.canvas.height != height) {
-        gl.canvas.width = width*4;
-        gl.canvas.height = height*4;
+        gl.canvas.width = width*2;
+        gl.canvas.height = height*2;
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     }
     gl.clear(gl.COLOR_BUFFER_BIT);
