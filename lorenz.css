@@ -65,9 +65,10 @@ canvas {
 }
 
 #stats {
-    position: absolute;
+    /* position: absolute; */
     bottom: 5px;
     left: 5px;
     font-weight: bold;
     font-size: 14px;
+    margin-top: 10px;
 }
