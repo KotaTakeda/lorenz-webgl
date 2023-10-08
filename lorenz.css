@@ -14,7 +14,7 @@ canvas {
     height: 100%;
 }
 
-#help {
+#help, #help-small {
     position: absolute;
     top: 0;
     left: 0;

@@ -10,6 +10,8 @@ window.addEventListener('load', function() {
         if (e.which === '?'.charCodeAt(0)) {
             var h = document.querySelector('#help');
             h.style.display = h.style.display == 'none' ? 'block' : 'none';
+            var hsmall = document.querySelector('#help-small');
+            hsmall.style.display = hsmall.style.display == 'none' ? 'block' : 'none';
         }
     });
     // window.addEventListener('touchstart', function self(e) {
