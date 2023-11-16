@@ -119,6 +119,8 @@ function Controls(lorenz) {
             this.add();
         else if (e.which == 'c'.charCodeAt(0))
             this.clone();
+        else if (e.which == 'v'.charCodeAt(0))
+            this.clone_cube();
         else if (e.which == 'C'.charCodeAt(0))
             this.clear();
         else if (e.which == ' '.charCodeAt(0))
@@ -195,6 +197,28 @@ Controls.prototype.clone = function() {
     s[1] += (Math.random() - 0.5) / 10000;
     s[2] += (Math.random() - 0.5) / 10000;
     this.lorenz.add(s);
+    for (var n = 0; n < this.listeners.length; n++)
+        this.listeners[n]();
+};
+
+Controls.prototype.clone_cube = function() {
+    var i = Math.floor(Math.random() * this.lorenz.solutions.length);
+    var s = this.lorenz.solutions[i].slice(0);
+    var cube = []
+    for (var i = -1; i < 2; i++){
+        for (var j = -1; j < 2; j++){
+            for (var k = -1; k < 2; k++){
+                if (i == 0 & j == 0 & k == 0){continue;}
+                var c = s.concat()
+                c[0] += i*0.0001;
+                c[1] += j*0.0001;
+                c[2] += k*0.0001;
+                cube.push(c);
+            }
+        }
+    }
+    console.log(cube.length);
+    this.lorenz.add_batch(cube);
     for (var n = 0; n < this.listeners.length; n++)
         this.listeners[n]();
 };

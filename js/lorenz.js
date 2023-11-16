@@ -18,7 +18,8 @@ function Lorenz(canvas) {
         rho: 28,
         step_size: 0.001,
         steps_per_frame: 6,
-        paused: false
+        paused: false,
+        noise: 0.1,
     };
     this.display = {
         scale: 1 / 25,
@@ -467,6 +468,23 @@ Lorenz.prototype.add = function(s) {
     var gl = this.gl;
     var length = this.display._length;
     this.solutions.push(s.slice(0));
+    this._grow_buffers();
+    return this;
+};
+
+/**
+ * Add a new solution to the system.
+ * @param {number[3][N]} ss
+ * @returns {Lorenz} this
+ */
+Lorenz.prototype.add_batch = function(ss) {
+    // var gl = this.gl;
+    // var length = this.display._length;
+    for (var i = 0; i < ss.length; i++){
+        console.log(ss[i]);
+        this.solutions.push(ss[i].slice(0));
+    }
+
     this._grow_buffers();
     return this;
 };
