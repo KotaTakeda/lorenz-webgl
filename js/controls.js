@@ -15,7 +15,9 @@ function Controls(lorenz) {
     var rho = this.bind('#rho', '#rho-label', function(value) {
         return lorenz.params.sigma = value;
     })(lorenz.params.rho);
-
+    var noise = this.bind('#noise', '#noise-label', function(value) {
+        return lorenz.params.noise = value;
+    })(lorenz.params.noise);
     this.set_sigma = function(value) {
         lorenz.params.sigma = value;
         sigma(value);
@@ -27,6 +29,10 @@ function Controls(lorenz) {
     this.set_rho = function(value) {
         lorenz.params.rho = value;
         rho(value);
+    };
+    this.set_noise = function(value) {
+        lorenz.params.noise = value;
+        noise(value);
     };
     
     // params for simulation

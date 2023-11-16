@@ -19,7 +19,7 @@ function Lorenz(canvas) {
         step_size: 0.001,
         steps_per_frame: 6,
         paused: false,
-        noise: 0.1,
+        noise: 0,
     };
     this.display = {
         scale: 1 / 25,
@@ -252,6 +252,19 @@ Lorenz.lorenz = function(s, dt, σ, β, ρ) {
 };
 
 /**
+ * Add noise to s 
+ * @param {!number[3]} s
+ * @param {!number}    dt
+ * @param {!number}    noise
+ * @returns {undefined}
+ */
+Lorenz.add_noise = function(s, dt, noise) {
+    s[0] += noise * dt**0.5 * rnorm();
+    s[1] += noise * dt**0.5 * rnorm();
+    s[2] += noise * dt**0.5 * rnorm();
+}
+
+/**
  * Update the tail WebGL buffer between two indexes.
  * @param {number} a, with a <= b
  * @param {number} b
@@ -288,6 +301,7 @@ Lorenz.prototype.step = function() {
         var β = this.params.beta;
         var ρ = this.params.rho;
         var dt = this.params.step_size;
+        var noise = this.params.noise;
         var length = this.display._length;
         var tail = this.tail;
         var start_index = this.tail_index;
@@ -297,6 +311,9 @@ Lorenz.prototype.step = function() {
             this.tail_index = (this.tail_index + 1) % length;
             for (var i = 0; i < this.solutions.length; i++)  {
                 Lorenz.lorenz(this.solutions[i], dt, σ, β, ρ);
+                if (noise > 0) {
+                    Lorenz.add_noise(this.solutions[i], dt, noise);
+                }
                 var base = i * length * 3 + tail_index * 3;
                 tail[base + 0] = this.solutions[i][0];
                 tail[base + 1] = this.solutions[i][1];
@@ -473,8 +490,8 @@ Lorenz.prototype.add = function(s) {
 };
 
 /**
- * Add a new solution to the system.
- * @param {number[3][N]} ss
+ * Add a new solutions to the system.
+ * @param {number[3][]} ss
  * @returns {Lorenz} this
  */
 Lorenz.prototype.add_batch = function(ss) {
@@ -484,7 +501,6 @@ Lorenz.prototype.add_batch = function(ss) {
         console.log(ss[i]);
         this.solutions.push(ss[i].slice(0));
     }
-
     this._grow_buffers();
     return this;
 };
@@ -564,3 +580,7 @@ Lorenz.run = function(canvas) {
     requestAnimationFrame(go);
     return lorenz;
 };
+
+function rnorm(){
+    return Math.sqrt(-2 * Math.log(1 - Math.random())) * Math.cos(2 * Math.PI * Math.random());
+}

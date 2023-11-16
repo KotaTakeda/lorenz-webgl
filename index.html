@@ -8,10 +8,11 @@
     <script src="js/controls.js" defer></script>
     <script src="js/main.js" defer></script>
   </head>
+  <!-- TODO: Lorenz方程式とパラメータの説明 -->
   <body>
     <div id="help" style="display: none;">
       <ul>
-        <li><kbd></kbd>
+        <!-- <li><kbd></kbd>
           <label>left-click + drag: rotate X/Y</label>
         </li>
         <li><kbd></kbd>
@@ -22,7 +23,7 @@
         </li>
         <li><kbd></kbd>
           <label>mousewheel: zoom in/out</label>
-        </li>
+        </li> -->
         <li><kbd></kbd>
           <label>spacebar pauses/unpauses</label>
         </li>
@@ -73,6 +74,10 @@
         <li>
           <input id="rho" type="range" min="0" max="300" step="0.01"/>
           <label>&rho; = <span id="rho-label"></span></label>
+        </li>
+        <li>
+          <input id="noise" type="range" min="0" max="10" step="0.01"/>
+          <label>noise = <span id="noise-label"></span></label>
         </li>
         <li>
           <select id="preset">
