@@ -48,7 +48,12 @@ window.addEventListener('load', function() {
             controls.set_sigma(17.24);
             controls.set_beta(1.1);
             controls.set_rho(217);
-            lorenz.display.scale = 1 / 65;
+            // lorenz.display.scale = 1 / 65;
+        }
+        else if (preset.value === 'inits') {
+            controls.set_sigma(10);
+            controls.set_beta(8/3);
+            controls.set_rho(28);
         }
     });
 });
