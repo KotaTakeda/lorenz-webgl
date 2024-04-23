@@ -126,7 +126,7 @@ function Controls(lorenz) {
         else if (e.which == 'c'.charCodeAt(0))
             this.clone();
         else if (e.which == 'v'.charCodeAt(0))
-            this.clone_cube();
+            this.clone_circle();
         else if (e.which == 'C'.charCodeAt(0))
             this.clear();
         else if (e.which == ' '.charCodeAt(0))
@@ -225,6 +225,27 @@ Controls.prototype.clone_cube = function() {
     }
     console.log(cube.length);
     this.lorenz.add_batch(cube);
+    for (var n = 0; n < this.listeners.length; n++)
+        this.listeners[n]();
+};
+
+Controls.prototype.clone_circle = function() {
+    var s = this.lorenz.solutions[0].slice(0);
+    var circle = [];
+    var N = 128;
+    var r = 3;
+    var v1 = [1.0, 0.0, 0.0];
+    var v2 = [0.0, 1.0, 0.0];
+
+    for (var i = 0; i < N; i++){ 
+        var theta = 2*Math.PI * i / N;
+        var c = s.concat();
+        c[0] += r*Math.cos(theta)*v1[0] + r*Math.sin(theta)*v2[0];
+        c[1] += r*Math.cos(theta)*v1[1] + r*Math.sin(theta)*v2[1];
+        c[2] += r*Math.cos(theta)*v1[2] + r*Math.sin(theta)*v2[2];
+        circle.push(c);
+    }
+    this.lorenz.add_batch(circle);
     for (var n = 0; n < this.listeners.length; n++)
         this.listeners[n]();
 };

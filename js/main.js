@@ -30,11 +30,16 @@ window.addEventListener('load', function() {
 
     var preset = document.querySelector('#preset');
     preset.addEventListener('change', function() {
-        if (preset.value === 'chaos') {
+        if (preset.value === 'chaos1') {
             controls.clear();
             controls.add();
             for (var i = 0; i < 31; i++)
                 controls.clone();
+        } else if (preset.value === 'chaos2') {
+            controls.clear();
+            controls.add();
+            controls.clone_circle();
+            lorenz.display.draw_heads = true;
         } else if (preset.value === 'gentle') {
             while (lorenz.solutions.length < 32)
                 controls.add();

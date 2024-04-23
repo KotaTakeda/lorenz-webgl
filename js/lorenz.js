@@ -498,7 +498,7 @@ Lorenz.prototype.add_batch = function(ss) {
     // var gl = this.gl;
     // var length = this.display._length;
     for (var i = 0; i < ss.length; i++){
-        console.log(ss[i]);
+        // console.log(ss[i]);
         this.solutions.push(ss[i].slice(0));
     }
     this._grow_buffers();
