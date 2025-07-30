@@ -35,7 +35,7 @@ function Controls(lorenz) {
         noise(value);
     };
     
-    // params for simulation
+    // params of simulation
     var stepsize = this.bind('#stepsize', '#stepsize-label', function(value) {
         return lorenz.params.step_size = value;
     })(lorenz.params.step_size);

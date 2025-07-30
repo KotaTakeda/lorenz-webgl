@@ -179,23 +179,23 @@ Lorenz.generate = function() {
  * @returns {number[3]}
  */
 Lorenz.color = function(i) {
-    var colors = [
-        0x8d, 0xd3, 0xc7,
-        0xff, 0xff, 0xb3,
-        0xbe, 0xba, 0xda,
-        0xfb, 0x80, 0x72,
-        0x80, 0xb1, 0xd3,
-        0xfd, 0xb4, 0x62,
-        0xb3, 0xde, 0x69,
-        0xfc, 0xcd, 0xe5,
-        0xd9, 0xd9, 0xd9,
-        0xbc, 0x80, 0xbd,
-        0xcc, 0xeb, 0xc5,
-        0xff, 0xed, 0x6f,
-        0xff, 0xff, 0xff
-    ];
-    var base = (i * 3) % colors.length;
-    return colors.slice(base, base + 3).map(function(x) { return x / 255; });
+    function hsv2rgb(h, s, v) {
+        let c = v * s;
+        let x = c * (1 - Math.abs((h / 60) % 2 - 1));
+        let m = v - c;
+        let r, g, b;
+        if (h < 60)      { r = c; g = x; b = 0; }
+        else if (h < 120){ r = x; g = c; b = 0; }
+        else if (h < 180){ r = 0; g = c; b = x; }
+        else if (h < 240){ r = 0; g = x; b = c; }
+        else if (h < 300){ r = x; g = 0; b = c; }
+        else             { r = c; g = 0; b = x; }
+        return [r + m, g + m, b + m];
+    }
+    // Set the period to 128
+    let hue = (i * 360 / 128) % 360;
+    let rgb = hsv2rgb(hue, 0.8, 1.0);
+    return rgb;
 };
 
 
